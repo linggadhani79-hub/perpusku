@@ -1,0 +1,34 @@
+name: CI
+on:
+  push: { branches: [main] }
+  pull_request:
+
+jobs:
+  uji-api:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:17
+        env: { POSTGRES_USER: perpus, POSTGRES_PASSWORD: sandi, POSTGRES_DB: perpusku_test }
+        ports: ["5432:5432"]
+        options: --health-cmd pg_isready --health-interval 5s --health-retries 10
+    defaults:
+      run: { working-directory: apps/api }
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 24, cache: npm, cache-dependency-path: apps/api/package-lock.json }
+      - run: npm ci
+      - run: npm run lint --if-present
+      - run: npm test
+
+  build-web:
+    runs-on: ubuntu-latest
+    defaults:
+      run: { working-directory: apps/web }
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 24, cache: npm, cache-dependency-path: apps/web/package-lock.json }
+      - run: npm ci
+      - run: npm run build
