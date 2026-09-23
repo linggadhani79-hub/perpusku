@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PerpusKu — Katalog Perpustakaan Kampus</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <header class="navbar">
+    <a href="/" class="logo"><span class="logo-ikon">P</span>PerpusKu</a>
+    <nav>
+      <a href="/" class="aktif">Katalog</a>
+      <a href="/pinjaman">Pinjaman Saya</a>
+      <a href="/masuk" class="tombol tombol-kecil">Masuk</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero">
+      <p class="label">Perpustakaan Kampus</p>
+      <h1>Temukan buku berikutnya<br>untuk dibaca.</h1>
+      <form class="cari" role="search">
+        <input id="cari" type="search" placeholder="Cari judul atau penulis…" aria-label="Cari buku">
+        <button type="submit" class="tombol">Cari</button>
+      </form>
+      <div class="chip-grup" id="filter-kategori">
+        <button class="chip aktif" data-kategori="Semua">Semua</button>
+        <button class="chip" data-kategori="Teknologi">Teknologi</button>
+        <button class="chip" data-kategori="Sains">Sains</button>
+        <button class="chip" data-kategori="Sastra">Sastra</button>
+      </div>
+    </section>
+
+    <section aria-labelledby="judul-katalog">
+      <div class="judul-bagian">
+        <h2 id="judul-katalog">Koleksi Terbaru</h2>
+        <p id="jumlah">8 buku</p>
+      </div>
+      <div class="katalog" id="katalog">
+        <article class="kartu">
+          <div class="sampul" style="--warna:#264653">Algoritma Pemrograman</div>
+          <div class="info">
+            <span class="badge">Teknologi</span>
+            <h3>Algoritma Pemrograman</h3>
+            <p class="penulis">B. N. Widyaningrum</p>
+            <div class="bawah">
+              <span class="stok ada">4 tersedia</span>
+              <button class="tombol tombol-kecil">Pinjam</button>
+            </div>
+          </div>
+        </article>
+        <!-- kartu lain disusun dengan pola yang sama -->
+      </div>
+    </section>
+  </main>
+
+  <footer>© 2026 Perpustakaan Kampus · Dibuat dengan HTML &amp; CSS</footer>
+  <script src="js/app.js" defer></script>
+</body>
+</html>

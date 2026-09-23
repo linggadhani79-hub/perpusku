@@ -1,0 +1,40 @@
+# compose.yaml
+services:
+  db:
+    image: postgres:17
+    environment:
+      POSTGRES_DB: perpusku
+      POSTGRES_USER: perpus
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+    volumes:
+      - data-pg:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U perpus"]
+      interval: 5s
+      retries: 10
+
+  redis:
+    image: redis:8-alpine
+
+  api:
+    build: ./apps/api
+    environment:
+      DATABASE_URL: postgresql://perpus:${DB_PASSWORD}@db:5432/perpusku
+      REDIS_URL: redis://redis:6379
+      JWT_SECRET: ${JWT_SECRET}
+      JWT_REFRESH_SECRET: ${JWT_REFRESH_SECRET}
+      ASAL_FRONTEND: http://localhost:8080
+    ports:
+      - "127.0.0.1:3000:3000"
+    depends_on:
+      db: { condition: service_healthy }
+      redis: { condition: service_started }
+
+  web:
+    build: ./apps/web
+    ports:
+      - "8080:80"
+    depends_on: [api]
+
+volumes:
+  data-pg:
